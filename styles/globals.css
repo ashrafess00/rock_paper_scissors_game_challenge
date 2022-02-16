@@ -1,16 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+:root{
+  --svgWidth:5vw,
+  --svgHeight:4rem,
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+  background-image: linear-gradient(
+    45deg,
+    hsl(214, 47%, 23%),
+    hsl(237, 49%, 15%)
+  );
+
+  padding: 0.5rem;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
+@media screen and (min-width:600px) {
+  body{
+    padding-left: 9rem;
+    padding-right: 9rem;
+  }
+  
 }
