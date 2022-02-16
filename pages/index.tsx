@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import Play from "../Components/Play";
 
 import rulesImg from "../public/images/image-rules-bonus.svg";
-import { randomUUID } from "crypto";
 
 const Home: NextPage = () => {
   const [choice, setChoice] = useState<HandsClass>(null!);
