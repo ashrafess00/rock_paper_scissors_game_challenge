@@ -1,27 +1,21 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
-import { Coordinates } from "../Components/Coordinates";
+import { HandsClass } from "../Classes/HandsClass";
 import { useEffect, useRef, useState } from "react";
 import Play from "../Components/Play";
-import { json } from "stream/consumers";
 
 import rulesImg from "../public/images/image-rules-bonus.svg";
+import { randomUUID } from "crypto";
 
 const Home: NextPage = () => {
-  const [choice, setChoice] = useState<Coordinates>(null!);
+  const [choice, setChoice] = useState<HandsClass>(null!);
   const [showRule, setShowRule] = useState(false);
   const overlay = useRef(null!);
 
   const showRules = () => {
     setShowRule(!showRule);
-    // if (showRule) {
-    //   document.getElementById("overlay")!.style.display = "block";
-    // } else {
-    //   document.getElementById("overlay")!.style.display = "none";
-    // }
   };
 
   const [score, setScore] = useState<number>(() => {
@@ -35,8 +29,7 @@ const Home: NextPage = () => {
   const [computerChoice, setComputerChoice] = useState<string>("");
 
   useEffect(() => {
-    console.log(localStorage.getItem("jj"));
-    const card: string[] = [
+    const Hands: string[] = [
       "scissor",
       "paper",
       "rock",
@@ -45,7 +38,8 @@ const Home: NextPage = () => {
       "scissor",
     ];
 
-    setComputerChoice(card[Math.floor(Math.random() * 5)]);
+    // computer will chose a random hand
+    setComputerChoice(Hands[Math.floor(Math.random() * 5)]);
     if (!localStorage.getItem("myScore")) {
       localStorage.setItem("myScore", JSON.stringify(0));
     }
@@ -55,35 +49,36 @@ const Home: NextPage = () => {
   const svgHeight = 350;
   const circleRadius = 40;
 
-  const scissor = new Coordinates(
+  // create hands objects with specific coordinates
+  const scissor = new HandsClass(
     "scissor",
     svgWidth / 2,
     50,
     "hsl(40, 84%, 53%)",
     ["paper", "lizard"]
   );
-  const spock = new Coordinates(
+  const spock = new HandsClass(
     "spock",
     50,
     svgHeight / 2 - 30,
     "hsl(189, 58%, 57%)",
     ["scissor", "rock"]
   );
-  const paper = new Coordinates(
+  const paper = new HandsClass(
     "paper",
     svgWidth - 50,
     svgHeight / 2 - 30,
     "hsl(230, 89%, 65%)",
     ["rock", "spock"]
   );
-  const lizard = new Coordinates(
+  const lizard = new HandsClass(
     "lizard",
     80,
     svgHeight - 80,
     "hsl(261, 72%, 63%)",
     ["spock", "paper"]
   );
-  const rock = new Coordinates(
+  const rock = new HandsClass(
     "rock",
     svgWidth - 80,
     svgHeight - 80,
@@ -91,7 +86,7 @@ const Home: NextPage = () => {
     ["lizard", "scissor"]
   );
 
-  function select(cardName: Coordinates) {
+  function select(cardName: HandsClass) {
     setChoice(cardName);
   }
 
@@ -132,6 +127,7 @@ const Home: NextPage = () => {
           display: `${!choice ? "block" : "none"}`,
         }}
       >
+        {/* drawin the polygon  */}
         {/* line from scissor to paper  */}
         <line x1={scissor.x} y1={scissor.y} x2={paper.x} y2={paper.y}></line>
         {/* line from paper to rock */}

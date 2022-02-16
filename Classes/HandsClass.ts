@@ -4,7 +4,7 @@ import scissor from "../public/images/icon-scissors.svg";
 import lizard from "../public/images/icon-lizard.svg";
 import spock from "../public/images/icon-spock.svg";
 
-export class Coordinates {
+export class HandsClass {
   cardName: string;
   x: number;
   y: number;

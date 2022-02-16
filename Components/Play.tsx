@@ -1,29 +1,14 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import playStyle from "../styles/Play.module.css";
 import Image from "next/image";
+import PropTypes from "../Interfaces/PropTypes";
 
-import { Coordinates } from "./Coordinates";
-
-interface PropsTypes {
-  choice: Coordinates;
-  setChoice: Dispatch<SetStateAction<Coordinates>>;
-  setScore: Dispatch<SetStateAction<number>>;
-  computerChoice: string;
-  setComputerChoice: Dispatch<SetStateAction<string>>;
-  score: number;
-}
-
-const Play = (props: PropsTypes) => {
-  // const [myChoice, setMyChoice] = useState("");
-  // const [computerChoice, setComputerChoice] = useState("");
-  const [winner, setWinner] = useState("");
-
+const Play = (props: PropTypes) => {
   const cardName = props.choice.cardName;
   function tryAgain() {
     props.setChoice(null!);
     props.setComputerChoice("");
   }
-  let defeat: string[] = [];
 
   useEffect(() => {
     if (props.choice.getDefeat().includes(props.computerChoice)) {
@@ -47,28 +32,29 @@ const Play = (props: PropsTypes) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   props.setComputerChoice("");
-  // }, [props.choice]);
-
-  // if (props.choice.getDefeat().includes(computerChoice)) {
-  //   props.setScore(10);
-  // }
-
   return (
     <>
       <div className={`${playStyle.flex} ${playStyle.container}`}>
-        <div
-          className={playStyle.circle}
-          style={{ borderColor: `${props.choice.strokeColor}` }}
-        >
-          <Image src={props.choice.getImage(cardName)} alt="jkjk" />
+        <div className={playStyle.handCon}>
+          <div
+            className={playStyle.circle}
+            style={{ borderColor: `${props.choice.strokeColor}` }}
+          >
+            <Image src={props.choice.getImage(cardName)} alt="my hand" />
+          </div>
+          <p>YOU PICKED</p>
         </div>
 
-        <div className={playStyle.circle}>
-          {props.computerChoice && (
-            <Image src={props.choice.getImage(props.computerChoice)} />
-          )}
+        <div className={playStyle.handCon}>
+          <div className={playStyle.circle}>
+            {props.computerChoice && (
+              <Image
+                src={props.choice.getImage(props.computerChoice)}
+                alt="computer hand"
+              />
+            )}
+          </div>
+          <p>THE HOUSE PICKED</p>
         </div>
       </div>
       <div className={playStyle.winner}>
